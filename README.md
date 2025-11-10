@@ -1,115 +1,81 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Чат-бот про школы и администрацию ALMAU!</title>
-    <link rel="stylesheet" href="style.css">
+    <title>ALMAU — ONE UNIVERSITY, ONE COMMUNITY</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f7f9fc;
-            margin: 0;
-            color: #222;
+        :root{
+            --brand:#1746a0;
+            --bg:#f7f9fc;
+            --card:#fff;
+            --muted:#6b7280;
         }
-        header {
-            background: #1746a0;
-            color: #fff;
-            padding: 24px 0 10px 0;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(23,70,160,0.07);
-        }
-        nav {
-            margin-top: 16px;
-        }
-        .tab-btn {
-            background: #fff;
-            color: #1746a0;
-            border: 1px solid #1746a0;
-            border-radius: 20px;
-            padding: 8px 18px;
-            margin: 4px 2px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: background 0.2s, color 0.2s;
-        }
-        .tab-btn:hover, .tab-btn.active {
-            background: #1746a0;
-            color: #fff;
-        }
-        main {
-            max-width: 800px;
-            margin: 32px auto 0 auto;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(23,70,160,0.08);
-            padding: 32px 24px 24px 24px;
-        }
-        h2 {
-            color: #1746a0;
-            margin-top: 0;
-            margin-bottom: 10px;
-            font-size: 2em;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-        h3 {
-            margin-top: 18px;
-            color: #222;
-        }
-        ul {
-            margin-top: 8px;
-            margin-bottom: 18px;
-        }
-        section.tab-section {
-            animation: fadeIn 0.4s;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-        img {
-            display: block;
-            margin-bottom: 10px;
-        }
-        footer {
-            text-align: center;
-            padding: 18px 0 10px 0;
-            color: #1746a0;
-            background: #f0f4fa;
-            font-size: 1em;
-            margin-top: 32px;
-            border-radius: 0 0 18px 18px;
-        }
-        a {
-            color: #1746a0;
-            text-decoration: underline;
-        }
-        hr {
-            margin: 24px 0;
-            border: none;
-            border-top: 1px solid #e0e6f6;
-        }
+        html,body{height:100%;margin:0;font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:#222}
+        header{background:var(--brand);color:#fff;padding:20px 12px 12px;text-align:center;box-shadow:0 2px 8px rgba(23,70,160,0.07)}
+        header h1{margin:6px 0 0;font-size:1.5rem;letter-spacing:1px}
+        header .slogan{color:#cfe0ff;margin-top:6px;font-weight:600}
+        nav{margin:14px auto 0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:8px;max-width:1100px}
+        .tab-btn{background:var(--card);color:var(--brand);border:1px solid var(--brand);border-radius:20px;padding:8px 14px;cursor:pointer;transition:200ms;font-size:0.95rem}
+        .tab-btn:hover,.tab-btn.active{background:var(--brand);color:#fff}
+        main{max-width:980px;margin:22px auto;padding:28px;border-radius:14px;background:var(--card);box-shadow:0 6px 24px rgba(23,70,160,0.08)}
+        h2{color:var(--brand);margin:0 0 8px;font-size:1.4rem;display:flex;align-items:center;gap:10px}
+        .info{position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#e8f0ff;color:var(--brand);font-weight:700;font-size:0.85rem;cursor:default}
+        .tooltip{position:absolute;left:28px;top:-6px;width:240px;background:var(--brand);color:#fff;padding:8px;border-radius:8px;box-shadow:0 8px 22px rgba(23,70,160,0.14);opacity:0;visibility:hidden;transform:translateY(6px);transition:200ms}
+        .info:hover .tooltip,.info:focus .tooltip{opacity:1;visibility:visible;transform:translateY(0)}
+        h3{margin-top:14px}
+        ul{margin-top:8px;margin-bottom:18px}
+        .meta{margin-top:6px;font-size:0.95rem}
+        .muted{color:var(--muted);font-size:0.94rem}
+        footer{text-align:center;padding:16px 0;color:var(--brand);background:#f0f4fa;border-radius:0 0 14px 14px;margin-top:18px}
+        a{color:var(--brand)}
+        @media(max-width:640px){.tooltip{left:0;top:28px;width:calc(100vw - 60px)}nav{gap:6px;padding:6px}main{margin:12px;padding:18px}}
     </style>
 </head>
 <body>
     <header>
         <h1>AlmaU: школы</h1>
-        <nav>
-            <button class="tab-btn" onclick="showTab('school1')">Школа менеджмента</button>
-            <button class="tab-btn" onclick="showTab('school2')">Школа экономики и финансов</button>
-            <button class="tab-btn" onclick="showTab('school3')">Школа политики и права</button>
-            <button class="tab-btn" onclick="showTab('school4')">School of Digital Technologies</button>
-            <button class="tab-btn" onclick="showTab('school5')">Sharmanov School of Health Sciences</button>
-            <button class="tab-btn" onclick="showTab('school6')">Школа медиа и кино</button>
-            <button class="tab-btn" onclick="showTab('school7')">Школа предпринимательства и инноваций</button>
-            <button class="tab-btn" onclick="showTab('school8')">Школа гостеприимства и туризма</button>
-            <button class="tab-btn" onclick="showTab('school9')">School of Transformative Humanities</button>
+        <div class="slogan">ALMAU — ONE UNIVERSITY, ONE COMMUNITY.</div>
+        <nav aria-label="Школы AlmaU">
+            <button class="tab-btn" onclick="showTab('institute')">Институт предпринимательства</button>
+            <button class="tab-btn" onclick="showTab('hsb')">Высшая школа бизнеса</button>
+            <button class="tab-btn" onclick="showTab('mgmt')">Школа менеджмента и туризма</button>
+            <button class="tab-btn" onclick="showTab('digital')">School of Digital Technologies & Economics</button>
+            <button class="tab-btn" onclick="showTab('humanities')">Transformative Humanities & Education</button>
+            <button class="tab-btn" onclick="showTab('media')">Школа медиа и кино</button>
             <button class="tab-btn" onclick="showTab('contacts')">Контакты</button>
         </nav>
     </header>
+
     <main>
-        <section id="school1" class="tab-section">
-            <h2>Школа менеджмента</h2>
-            <img src="logo-manager.png" alt="Логотип школы менеджмента" style="max-width:120px;">
+        <section id="institute" class="tab-section" style="display:none">
+            <h2>Институт предпринимательства
+                <span class="info" tabindex="0">i
+                    <span class="tooltip">Поддержка стартапов, акселераторы и практическое развитие предпринимательских навыков.</span>
+                </span>
+            </h2>
+            <div class="meta"><strong>Директор:</strong> Медетов Данияр</div>
+            <p class="muted">Программы института направлены на практическое развитие предпринимательских компетенций.</p>
+        </section>
+
+        <section id="hsb" class="tab-section" style="display:none">
+            <h2>Высшая школа бизнеса
+                <span class="info" tabindex="0">i
+                <span class="tooltip">Карьера и лидерство: кейсы, менторство и профессиональное развитие.</span>
+                </span>
+            </h2>
+            <div class="meta"><strong>Руководитель:</strong> Южанинова-Караденизли Ксения Сергеевна</div>
+            <p class="meta"><strong>Часы приёма студентов и абитуриентов:</strong> в любое время по записи</p>
+            <p class="meta"><strong>Email:</strong> <a href="mailto:k.yuzhaninova@almau.edu.kz">k.yuzhaninova@almau.edu.kz</a></p>
+            <p class="meta"><strong>Кабинет:</strong> идет ремонт, 4 этаж</p>
+        </section>
+
+        <section id="mgmt" class="tab-section" style="display:none">
+            <h2>Школа менеджмента и туризма
+                <span class="info" tabindex="0">i
+                    <span class="tooltip">Менеджмент и гостеприимство — практика, маркетинг и сервисное мышление.</span>
+                </span>
+            </h2>
+            <div class="meta"><strong>Руководитель:</strong> Ауезханулы Азамат</div>
             <h3>Специальности:</h3>
             <ul>
                 <li>6B04101 – Менеджмент</li>
@@ -120,30 +86,15 @@
                 <li>6B04124 – Digital marketing</li>
             </ul>
         </section>
-        <section id="school2" class="tab-section" style="display:none;">
-            <h2>Школа экономики и финансов</h2>
-            <img src="logo-econ.png" alt="Логотип школы экономики и финансов" style="max-width:120px;">
-            <h3>Специальности:</h3>
-            <ul>
-                <li>6B04190 – Бизнес-аналитика и экономика</li>
-                <li>6В04106 – Учет и аудит</li>
-                <li>6B04105 – Финансы</li>
-                <li>6B04125 – FinTech and Artificial Intelligence</li>
-            </ul>
-        </section>
-        <section id="school3" class="tab-section" style="display:none;">
-            <h2>Школа политики и права</h2>
-            <img src="logo-law.png" alt="Логотип школы политики и права" style="max-width:120px;">
-            <h3>Специальности:</h3>
-            <ul>
-                <li>6B04201 – Юриспруденция (Бизнес-право)</li>
-                <li>6В03088(1) – Международные отношения и экономика</li>
-            </ul>
-        </section>
-        <section id="school4" class="tab-section" style="display:none;">
-            <h2>School of Digital Technologies</h2>
-            <img src="logo-digital.png" alt="Logo School of Digital Technologies" style="max-width:120px;">
-            <h3>Specialties:</h3>
+
+        <section id="digital" class="tab-section" style="display:none">
+            <h2>School of Digital Technologies & Economics
+                <span class="info" tabindex="0">i
+                    <span class="tooltip">IT и экономика: подготовка специалистов для цифровой трансформации.</span>
+                </span>
+            </h2>
+            <div class="meta"><strong>Руководитель:</strong> Комекбаев Арман Ерманатович</div>
+            <h3>Специальности / Specialties:</h3>
             <ul>
                 <li>6B06101 – Информационные системы</li>
                 <li>6B06103 – Software Engineering</li>
@@ -156,17 +107,24 @@
                 <li>6B06109 – Software engineering and information protection</li>
             </ul>
         </section>
-        <section id="school5" class="tab-section" style="display:none;">
-            <h2>Sharmanov School of Health Sciences</h2>
-            <img src="logo-health.png" alt="Logo Sharmanov School of Health Sciences" style="max-width:120px;">
-            <h3>Специальности:</h3>
-            <ul>
-                <li>6B03104 – Психология</li>
-            </ul>
+
+        <section id="humanities" class="tab-section" style="display:none">
+            <h2>School of Transformative Humanities & Education
+                <span class="info" tabindex="0">i
+                    <span class="tooltip">Гуманитарные и образовательные практики, ориентированные на трансформацию общества.</span>
+                </span>
+            </h2>
+            <div class="meta"><strong>Руководитель:</strong> Сапаргалиева Айжан Жанисовна</div>
+            <p class="muted">Программы в области образования и гуманитарных наук публикуются по мере обновления.</p>
         </section>
-        <section id="school6" class="tab-section" style="display:none;">
-            <h2>Школа медиа и кино</h2>
-            <img src="logo-media.png" alt="Логотип школы медиа и кино" style="max-width:120px;">
+
+        <section id="media" class="tab-section" style="display:none">
+            <h2>Школа медиа и кино
+                <span class="info" tabindex="0">i
+                    <span class="tooltip">Творчество и индустрия: медиа, кино и практические проекты.</span>
+                </span>
+            </h2>
+            <div class="meta"><strong>Руководитель:</strong> Секеева Анара Маратовна</div>
             <h3>Специальности:</h3>
             <ul>
                 <li>6B03201 – Связь с общественностью</li>
@@ -176,64 +134,31 @@
                 <li>6В02104 – Acting for Film</li>
             </ul>
         </section>
-        <section id="school7" class="tab-section" style="display:none;">
-            <h2>Школа предпринимательства и инноваций</h2>
-            <img src="logo-entrepreneur.png" alt="Логотип школы предпринимательства и инноваций" style="max-width:120px;">
-            <p>Информация о специальностях появится позже.</p>
-        </section>
-        <section id="school8" class="tab-section" style="display:none;">
-            <h2>Школа гостеприимства и туризма</h2>
-            <img src="logo-hospitality.png" alt="Логотип школы гостеприимства и туризма" style="max-width:120px;">
-            <h3>Специальности:</h3>
-            <ul>
-                <li>6B11101 – Ресторанное дело и гостиничный бизнес</li>
-                <li>6B11188 – Tourism and Event Management</li>
-            </ul>
-        </section>
-        <section id="school9" class="tab-section" style="display:none;">
-            <h2>School of Transformative Humanities</h2>
-            <img src="logo-humanities.png" alt="Logo School of Transformative Humanities" style="max-width:120px;">
-            <p>Информация о специальностях появится позже.</p>
-        </section>
 
-
-<section id="school10" class="tab-section" style="display:none;">
-            <h2>Высшая школа бизнеса</h2>
-            <img src="logo-business.png" alt="Логотип высшей школы бизнеса" style="max-width:120px;">
-            <p>Информация о специальностях появится позже.</p>
-        </section>
-        <section id="contacts" class="tab-section" style="display:none;">
+        <section id="contacts" class="tab-section" style="display:none">
             <h2>Контакты AlmaU</h2>
-            <p><b>Адрес:</b> г. Алматы, Республика Казахстан, ул. Розыбакиева 227</p>
-            <p><b>Email:</b> <a href="mailto:admission@almau.edu.kz">admission@almau.edu.kz</a></p>
-            <p><b>Соцсети:</b> <a href="https://t.me/almau_edu" target="_blank">@almau_edu</a></p>
-            <p><b>Номер для консультаций:</b> <a href="tel:+77750061606">+7 775 006 1606</a></p>
+            <p><strong>Адрес:</strong> г. Алматы, Республика Казахстан, ул.Розыбакиева 227</p>
+            <p><strong>Email:</strong> <a href="mailto:admission@almau.edu.kz">admission@almau.edu.kz</a></p>
+            <p><strong>Соцсети:</strong> <a href="https://t.me/almau_edu" target="_blank" rel="noopener noreferrer">@almau_edu</a></p>
+            <p><strong>Номер для консультаций:</strong> <a href="tel:+77750061606">+7 775 006 1606</a></p>
             <hr>
-            <p><b>Я — чат-бот AlmaU в Telegram!</b><br>
-            Помогаю узнать всё о школах, поступлении и жизни в университете.<br>
-            Если возникнут вопросы — просто напишите в чат, и я с радостью помогу вам!</p>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2025 AlmaU</p>
-    </footer>
+
+    <footer>&copy; 2025 AlmaU</footer>
+
     <script>
-        function showTab(tabId) {
-            const sections = document.querySelectorAll('.tab-section');
-            const buttons = document.querySelectorAll('.tab-btn');
-            sections.forEach(sec => sec.style.display = 'none');
-            document.getElementById(tabId).style.display = 'block';
-            buttons.forEach(btn => btn.classList.remove('active'));
-            const navBtns = document.querySelectorAll('nav .tab-btn');
-            navBtns.forEach(btn => {
-                if (btn.getAttribute('onclick').includes(tabId)) {
-                    btn.classList.add('active');
-                }
+        function showTab(tabId){
+            document.querySelectorAll('.tab-section').forEach(s=>s.style.display='none');
+            const t=document.getElementById(tabId);
+            if(t) t.style.display='block';
+            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+            document.querySelectorAll('nav .tab-btn').forEach(b=>{
+                if(b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabId)) b.classList.add('active');
             });
+            if(t){ setTimeout(()=>{ const h=t.querySelector('h2'); if(h) h.scrollIntoView({behavior:'smooth',block:'start'}); },80); }
         }
-        document.addEventListener('DOMContentLoaded', function() {
-            showTab('school1');
-        });
+        document.addEventListener('DOMContentLoaded',()=>showTab('institute'));
     </script>
 </body>
 </html>
