@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AlmaU — Школы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #f0f4ff, #ffe5e5);
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(90deg, #003366, #cc0000);
+      color: white;
+      text-align: center;
+      padding: 30px 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
+
+    header .slogan {
+      margin-top: 8px;
+      opacity: 0.95;
+      font-weight: 600;
+    }
+
+    .page-nav {
+      max-width: 900px;
+      margin: 18px auto 0;
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      padding:0 12px;
+    }
+
+    .tab-btn {
+      background: #fff;
+      border: 1px solid #cc0000;
+      color: #003366;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .tab-btn.active {
+      background: #003366;
+      color: #fff;
+      border-color: #003366;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 24px auto 40px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 30px 40px;
+    }
+
+    h2 {
+      color: #003366;
+      border-left: 5px solid #cc0000;
+      padding-left: 10px;
+      margin-top: 0;
+    }
+
+    .tab-section { display: none; }
+
+    ol {
+      list-style: none;
+      counter-reset: step;
+      padding-left: 0;
+    }
+
+    li {
+      counter-increment: step;
+      margin: 25px 0;
+      padding: 20px;
+      border-left: 6px solid #003366;
+      background: #f9f9f9;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    li:hover {
+      background: #eef4ff;
+      transform: translateY(-3px);
+    }
+
+    li::before {
+      content: counter(step);
+      background: #cc0000;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+
+    .school-title { font-weight: 700; color: #003366; font-size: 1.05rem; }
+    .meta { margin-top: 8px; color: #333; }
+    .muted { color: #6b7280; font-size: 0.95rem; margin-top:6px; display:block; }
+    a { color: #cc0000; text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+
+    .message {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.05em;
+      color: #003366;
+      background: #f2f8ff;
+      border-radius: 12px;
+      padding: 14px;
+      border: 2px solid #cc0000;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #444;
+      font-size: 0.9em;
+      background: #f2f2f2;
+      border-top: 2px solid #003366;
+      margin-top: 28px;
+    }
+
+    .program-list { margin-top:10px; }
+    .program-list li { margin-bottom:6px; padding:0; border: none; background: transparent; counter-increment: none; }
+    .note { margin-top:12px; color:#444; }
+
+    /* small photo window for contacts tab */
+    .photo-wrap { display:flex; justify-content:center; margin-bottom:14px; }
+    .photo-window { width:360px; max-width:92%; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 8px 30px rgba(19,46,93,0.08); border:1px solid rgba(0,0,0,0.06); }
+    .photo-caption { background: linear-gradient(90deg,#003366,#cc0000); color:#fff; padding:8px 12px; font-weight:700; text-align:center; }
+    .photo-window img { width:100%; height:150px; object-fit:cover; display:block; }
+    @media (max-width: 640px) {
+      .container { margin: 20px 12px; padding: 20px; }
+      .page-nav { padding: 0 8px; gap:6px; }
+      .photo-window img { height:120px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AlmaU: школы</h1>
+    <div class="slogan">ALMAU — ONE UNIVERSITY, ONE COMMUNITY.</div>
+  </header>
+
+  <div class="page-nav">
+    <button class="tab-btn" data-target="schools">Школы и администрации</button>
+    <button class="tab-btn active" data-target="bachelor">Бакалавриат</button>
+    <button class="tab-btn" data-target="master">Магистратура</button>
+  </div>
+
+  <div class="container">
+
+    <!-- SCHOOLS tab now contains contacts + small photo window -->
+    <section id="schools" class="tab-section">
+      <h2>Контакты AlmaU</h2>
+
+      <div class="photo-wrap" aria-hidden="false">
+        <div class="photo-window" role="img" aria-label="Кампус AlmaU">
+          <div class="photo-caption">Кампус AlmaU</div>
+          <img src="https://almau.edu.kz/wp-content/uploads/2024/10/IMG_5614-scaled.jpg" alt="Кампус AlmaU" loading="lazy">
+        </div>
+      </div>
+
+      <div class="meta"><strong>Адрес:</strong> г. Алматы, Республика Казахстан, ул. Розыбакиева 227</div>
+      <div class="meta"><strong>Email приёмной комиссии:</strong> <a href="mailto:admission@almau.edu.kz">admission@almau.edu.kz</a></div>
+      <div class="meta"><strong>Телефон для консультаций:</strong> <a href="tel:+77750061606">+7 775 006 1606</a></div>
+      <div class="meta"><strong>Telegram:</strong> <a href="https://t.me/almau_edu" target="_blank" rel="noopener noreferrer">@almau_edu</a></div>
+      <div class="meta" style="margin-top:8px"><strong>Официальный сайт:</strong> <a href="https://almau.edu.kz" target="_blank" rel="noopener noreferrer">almau.edu.kz</a></div>
+      <p class="note" style="margin-top:12px">Для детальной информации по школам и программам переключитесь на вкладку «Бакалавриат».</p>
+    </section>
+
+    <!-- BACHELOR tab now contains full schools & administrations list -->
+    <section id="bachelor" class="tab-section" style="display:block;">
+      <h2>Школы и администрации — подробная информация</h2>
+      <ol>
+        <li>
+          <div class="school-title">Институт предпринимательства</div>
+          <div class="meta"><strong>Директор:</strong> Медетов Данияр</div>
+          <div class="muted">Поддержка стартапов, акселераторы и практическое развитие предпринимательских навыков.</div>
+        </li>
+
+        <li>
+          <div class="school-title">Высшая школа бизнеса</div>
+          <div class="meta"><strong>Руководитель:</strong> Южанинова‑Караденизли Ксения Сергеевна</div>
+          <div class="meta"><strong>Часы приёма студентов и абитуриентов:</strong> в любое время по записи</div>
+          <div class="meta"><strong>Email:</strong> <a href="mailto:k.yuzhaninova@almau.edu.kz">k.yuzhaninova@almau.edu.kz</a></div>
+          <div class="meta"><strong>Кабинет:</strong> идет ремонт, 4 этаж</div>
+        </li>
+
+        <li>
+          <div class="school-title">Школа менеджмента и туризма</div>
+          <div class="meta"><strong>Руководитель:</strong> Ауезханулы Азамат</div>
+          <h3 style="margin-top:10px;">Специальности:</h3>
+          <ul class="program-list">
+            <li>6B04101 – Менеджмент</li>
+            <li>6B11303 – Digital logistics</li>
+            <li>6B04104 – Маркетинг</li>
+            <li>6B04120 – Content, Marketing and Data Analysis</li>
+            <li>6B11301 – Логистика</li>
+            <li>6B04124 – Digital marketing</li>
+          </ul>
+          <div class="meta"><strong>Сотрудники:</strong></div>
+          <ul class="program-list">
+            <li>Умирзакова Динара Калдыбековна — Professor of Practice</li>
+            <li>Увалиева Асем Болатовна — Associate Professor</li>
+          </ul>
+        </li>
+
+        <li>
+          <div class="school-title">Школа медиа и кино</div>
+          <div class="meta"><strong>Руководитель:</strong> Секеева Анара Маратовна</div>
+          <h3 style="margin-top:10px;">Специальности:</h3>
+          <ul class="program-list">
+            <li>6B03201 – Связь с общественностью</li>
+            <li>6B03203 – New Media</li>
+            <li>6B03204 – Content, Marketing and Data Analysis</li>
+            <li>6В02103 – Digital Filmmaking</li>
+            <li>6В02104 – Acting for Film</li>
+          </ul>
+          <div class="meta"><strong>Преподаватель практики:</strong> Корабаева Екатерина Асановна — Professor of Practice</div>
+        </li>
+
+        <li>
+          <div class="school-title">Центр урбанистики</div>
+          <div class="meta"><strong>Директор Центра урбанистики:</strong> Жубанова Айнур Калыбековна</div>
+          <div class="meta"><strong>Программ‑лидер ОП «Урбанистика и сити‑менеджмент» (заместитель директора):</strong> Даулеткан Зарина</div>
+        </li>
+
+        <li>
+          <div class="school-title">School of Digital Technologies & Economics (SDTE)</div>
+          <div class="meta"><strong>Декан:</strong> Комекбаев Арман Ерманатович</div>
+
+          <div class="meta"><strong>Заместители декана:</strong></div>
+          <ul class="program-list">
+            <li>Болуспаев Шалкар Аманжолович — зам. декан по академическим вопросам</li>
+            <li>Сибанбаева Саулет Ербулатовна — зам. декан по науке и аккредитации</li>
+            <li>Малыш Мөлдір Малышықызы — зам. декан по международному развитию</li>
+          </ul>
+
+          <div class="meta"><strong>Программ‑лидеры:</strong></div>
+          <ul class="program-list">
+            <li>Жақсылық Алима Айбекқызы — программ лид по IT специальностям (ИС, РМ, DS, SE)</li>
+            <li>Садыкова Раушан Байжановна — программ лид по ОП "Финансы"</li>
+            <li>Евескина Жанара Болатбековна — программ лид по ОП "Учет и Аудит"</li>
+          </ul>
+
+          <div class="meta"><strong>Менеджеры SDTE:</strong></div>
+          <ul class="program-list">
+            <li>Талипова Айгуль Хисметовна</li>
+            <li>Ромашевская Арина Сергеевна</li>
+            <li>Мусаканова Айша Маратовна</li>
+          </ul>
+
+          <div class="muted">Примечание: у IT направлений (в составе SDTE) нет магистратуры и докторантуры. У ШЭФ (School of Economics & Finance) есть магистратура и докторантура — <a href="https://almau.edu.kz/ru/study/sef/" target="_blank" rel="noopener noreferrer">подробнее</a>.</div>
+
+          <div class="muted" style="margin-top:8px">Информацию о проректорах можно найти на странице ректората: <a href="https://almau.edu.kz/ru/rektorat/" target="_blank" rel="noopener noreferrer">https://almau.edu.kz/ru/rektorat/</a></div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="master" class="tab-section">
+      <h2>Магистратура</h2>
+
+      <p class="meta"><strong>Доступные школы:</strong></p>
+      <ul class="program-list">
+        <li>Школа менеджмента</li>
+        <li>Школа экономики и финансов</li>
+        <li>Школа предпринимательства и инноваций</li>
+        <li>Школа политики и права</li>
+        <li>Центр городских исследований</li>
+      </ul>
+
+      <p class="meta"><strong>Продолжительность обучения:</strong> 1 год или 2 года</p>
+      <p class="meta"><strong>Язык преподавания:</strong> Английский</p>
+
+      <h3 style="margin-top:12px;">Специальности по школам</h3>
+
+      <div class="meta"><strong>Школа менеджмента</strong></div>
+      <ul class="program-list">
+        <li>Менеджмент — 1 год</li>
+        <li>Менеджмент — 2 года</li>
+        <li>Управление цепочками поставок — 2 года</li>
+        <li>Управление проектами — 2 года</li>
+        <li>Маркетинг — 2 года</li>
+      </ul>
+
+      <div class="meta"><strong>Школа экономики и финансов</strong></div>
+      <ul class="program-list">
+        <li>Финансы — 1 год</li>
+        <li>Финансы — 2 года</li>
+      </ul>
+
+      <div class="meta"><strong>Школа политики и права</strong></div>
+      <ul class="program-list">
+        <li>Право (Предпринимательское право) — 1 год</li>
+        <li>Право (Предпринимательское право) — 2 года</li>
+      </ul>
+
+      <div class="meta"><strong>Школа предпринимательства и инноваций</strong></div>
+      <ul class="program-list">
+        <li>Управление продуктом — 1 год</li>
+        <li>Инновационное предпринимательство — 1 год</li>
+        <li>Управление в креативных индустриях — 1 год</li>
+      </ul>
+
+      <div class="meta"><strong>Центр городских исследований</strong></div>
+      <ul class="program-list">
+        <li>Градостроительство — 1 год</li>
+      </ul>
+
+      <p class="note">Ранее информация о бакалавриате была доступна в основном списке школ. Здесь добавлены только данные по магистратуре.</p>
+    </section>
+
+    <div class="message">ALMAU — ONE UNIVERSITY, ONE COMMUNITY.</div>
+  </div>
+
+  <footer>&copy; 2025 AlmaU</footer>
+
+  <script>
+    // табы: по клику показываем нужный раздел
+    document.querySelectorAll('.tab-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> {
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.getAttribute('data-target');
+        document.querySelectorAll('.tab-section').forEach(s=> s.style.display = 'none');
+        const el = document.getElementById(target);
+        if (el) el.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // ensure bachelor shown by default
+    window.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.tab-section').forEach(s=> s.style.display = 'none');
+      const b = document.getElementById('bachelor');
+      if (b) b.style.display = 'block';
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      const btn = document.querySelector('.tab-btn[data-target="bachelor"]');
+      if (btn) btn.classList.add('active');
+    });
+  </script>
+</body>
+</html>
+```// filepath: c:\Users\aiger\Downloads\schools.html
+// ...existing code...
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>AlmaU — Школы</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom right, #f0f4ff, #ffe5e5);
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+
+    header {
+      background: linear-gradient(90deg, #003366, #cc0000);
+      color: white;
+      text-align: center;
+      padding: 30px 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
+
+    header .slogan {
+      margin-top: 8px;
+      opacity: 0.95;
+      font-weight: 600;
+    }
+
+    .page-nav {
+      max-width: 900px;
+      margin: 18px auto 0;
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      padding:0 12px;
+    }
+
+    .tab-btn {
+      background: #fff;
+      border: 1px solid #cc0000;
+      color: #003366;
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .tab-btn.active {
+      background: #003366;
+      color: #fff;
+      border-color: #003366;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 24px auto 40px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 30px 40px;
+    }
+
+    h2 {
+      color: #003366;
+      border-left: 5px solid #cc0000;
+      padding-left: 10px;
+      margin-top: 0;
+    }
+
+    .tab-section { display: none; }
+
+    ol {
+      list-style: none;
+      counter-reset: step;
+      padding-left: 0;
+    }
+
+    li {
+      counter-increment: step;
+      margin: 25px 0;
+      padding: 20px;
+      border-left: 6px solid #003366;
+      background: #f9f9f9;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    li:hover {
+      background: #eef4ff;
+      transform: translateY(-3px);
+    }
+
+    li::before {
+      content: counter(step);
+      background: #cc0000;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      width: 30px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+    }
+
+    .school-title { font-weight: 700; color: #003366; font-size: 1.05rem; }
+    .meta { margin-top: 8px; color: #333; }
+    .muted { color: #6b7280; font-size: 0.95rem; margin-top:6px; display:block; }
+    a { color: #cc0000; text-decoration: none; font-weight: 600; }
+    a:hover { text-decoration: underline; }
+
+    .message {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.05em;
+      color: #003366;
+      background: #f2f8ff;
+      border-radius: 12px;
+      padding: 14px;
+      border: 2px solid #cc0000;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #444;
+      font-size: 0.9em;
+      background: #f2f2f2;
+      border-top: 2px solid #003366;
+      margin-top: 28px;
+    }
+
+    .program-list { margin-top:10px; }
+    .program-list li { margin-bottom:6px; padding:0; border: none; background: transparent; counter-increment: none; }
+    .note { margin-top:12px; color:#444; }
+
+    /* small photo window for contacts tab */
+    .photo-wrap { display:flex; justify-content:center; margin-bottom:14px; }
+    .photo-window { width:360px; max-width:92%; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 8px 30px rgba(19,46,93,0.08); border:1px solid rgba(0,0,0,0.06); }
+    .photo-caption { background: linear-gradient(90deg,#003366,#cc0000); color:#fff; padding:8px 12px; font-weight:700; text-align:center; }
+    .photo-window img { width:100%; height:150px; object-fit:cover; display:block; }
+    @media (max-width: 640px) {
+      .container { margin: 20px 12px; padding: 20px; }
+      .page-nav { padding: 0 8px; gap:6px; }
+      .photo-window img { height:120px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AlmaU: школы</h1>
+    <div class="slogan">ALMAU — ONE UNIVERSITY, ONE COMMUNITY.</div>
+  </header>
+
+  <div class="page-nav">
+    <button class="tab-btn" data-target="schools">Школы и администрации</button>
+    <button class="tab-btn active" data-target="bachelor">Бакалавриат</button>
+    <button class="tab-btn" data-target="master">Магистратура</button>
+  </div>
+
+  <div class="container">
+
+    <!-- SCHOOLS tab now contains contacts + small photo window -->
+    <section id="schools" class="tab-section">
+      <h2>Контакты AlmaU</h2>
+
+      <div class="photo-wrap" aria-hidden="false">
+        <div class="photo-window" role="img" aria-label="Кампус AlmaU">
+          <div class="photo-caption">Кампус AlmaU</div>
+          <img src="https://almau.edu.kz/wp-content/uploads/2024/10/IMG_5614-scaled.jpg" alt="Кампус AlmaU" loading="lazy">
+        </div>
+      </div>
+
+      <div class="meta"><strong>Адрес:</strong> г. Алматы, Республика Казахстан, ул. Розыбакиева 227</div>
+      <div class="meta"><strong>Email приёмной комиссии:</strong> <a href="mailto:admission@almau.edu.kz">admission@almau.edu.kz</a></div>
+      <div class="meta"><strong>Телефон для консультаций:</strong> <a href="tel:+77750061606">+7 775 006 1606</a></div>
+      <div class="meta"><strong>Telegram:</strong> <a href="https://t.me/almau_edu" target="_blank" rel="noopener noreferrer">@almau_edu</a></div>
+      <div class="meta" style="margin-top:8px"><strong>Официальный сайт:</strong> <a href="https://almau.edu.kz" target="_blank" rel="noopener noreferrer">almau.edu.kz</a></div>
+      <p class="note" style="margin-top:12px">Для детальной информации по школам и программам переключитесь на вкладку «Бакалавриат».</p>
+    </section>
+
+    <!-- BACHELOR tab now contains full schools & administrations list -->
+    <section id="bachelor" class="tab-section" style="display:block;">
+      <h2>Школы и администрации — подробная информация</h2>
+      <ol>
+        <li>
+          <div class="school-title">Институт предпринимательства</div>
+          <div class="meta"><strong>Директор:</strong> Медетов Данияр</div>
+          <div class="muted">Поддержка стартапов, акселераторы и практическое развитие предпринимательских навыков.</div>
+        </li>
+
+        <li>
+          <div class="school-title">Высшая школа бизнеса</div>
+          <div class="meta"><strong>Руководитель:</strong> Южанинова‑Караденизли Ксения Сергеевна</div>
+          <div class="meta"><strong>Часы приёма студентов и абитуриентов:</strong> в любое время по записи</div>
+          <div class="meta"><strong>Email:</strong> <a href="mailto:k.yuzhaninova@almau.edu.kz">k.yuzhaninova@almau.edu.kz</a></div>
+          <div class="meta"><strong>Кабинет:</strong> идет ремонт, 4 этаж</div>
+        </li>
+
+        <li>
+          <div class="school-title">Школа менеджмента и туризма</div>
+          <div class="meta"><strong>Руководитель:</strong> Ауезханулы Азамат</div>
+          <h3 style="margin-top:10px;">Специальности:</h3>
+          <ul class="program-list">
+            <li>6B04101 – Менеджмент</li>
+            <li>6B11303 – Digital logistics</li>
+            <li>6B04104 – Маркетинг</li>
+            <li>6B04120 – Content, Marketing and Data Analysis</li>
+            <li>6B11301 – Логистика</li>
+            <li>6B04124 – Digital marketing</li>
+          </ul>
+          <div class="meta"><strong>Сотрудники:</strong></div>
+          <ul class="program-list">
+            <li>Умирзакова Динара Калдыбековна — Professor of Practice</li>
+            <li>Увалиева Асем Болатовна — Associate Professor</li>
+          </ul>
+        </li>
+
+        <li>
+          <div class="school-title">Школа медиа и кино</div>
+          <div class="meta"><strong>Руководитель:</strong> Секеева Анара Маратовна</div>
+          <h3 style="margin-top:10px;">Специальности:</h3>
+          <ul class="program-list">
+            <li>6B03201 – Связь с общественностью</li>
+            <li>6B03203 – New Media</li>
+            <li>6B03204 – Content, Marketing and Data Analysis</li>
+            <li>6В02103 – Digital Filmmaking</li>
+            <li>6В02104 – Acting for Film</li>
+          </ul>
+          <div class="meta"><strong>Преподаватель практики:</strong> Корабаева Екатерина Асановна — Professor of Practice</div>
+        </li>
+
+        <li>
+          <div class="school-title">Центр урбанистики</div>
+          <div class="meta"><strong>Директор Центра урбанистики:</strong> Жубанова Айнур Калыбековна</div>
+          <div class="meta"><strong>Программ‑лидер ОП «Урбанистика и сити‑менеджмент» (заместитель директора):</strong> Даулеткан Зарина</div>
+        </li>
+
+        <li>
+          <div class="school-title">School of Digital Technologies & Economics (SDTE)</div>
+          <div class="meta"><strong>Декан:</strong> Комекбаев Арман Ерманатович</div>
+
+          <div class="meta"><strong>Заместители декана:</strong></div>
+          <ul class="program-list">
+            <li>Болуспаев Шалкар Аманжолович — зам. декан по академическим вопросам</li>
+            <li>Сибанбаева Саулет Ербулатовна — зам. декан по науке и аккредитации</li>
+            <li>Малыш Мөлдір Малышықызы — зам. декан по международному развитию</li>
+          </ul>
+
+          <div class="meta"><strong>Программ‑лидеры:</strong></div>
+          <ul class="program-list">
+            <li>Жақсылық Алима Айбекқызы — программ лид по IT специальностям (ИС, РМ, DS, SE)</li>
+            <li>Садыкова Раушан Байжановна — программ лид по ОП "Финансы"</li>
+            <li>Евескина Жанара Болатбековна — программ лид по ОП "Учет и Аудит"</li>
+          </ul>
+
+          <div class="meta"><strong>Менеджеры SDTE:</strong></div>
+          <ul class="program-list">
+            <li>Талипова Айгуль Хисметовна</li>
+            <li>Ромашевская Арина Сергеевна</li>
+            <li>Мусаканова Айша Маратовна</li>
+          </ul>
+
+          <div class="muted">Примечание: у IT направлений (в составе SDTE) нет магистратуры и докторантуры. У ШЭФ (School of Economics & Finance) есть магистратура и докторантура — <a href="https://almau.edu.kz/ru/study/sef/" target="_blank" rel="noopener noreferrer">подробнее</a>.</div>
+
+          <div class="muted" style="margin-top:8px">Информацию о проректорах можно найти на странице ректората: <a href="https://almau.edu.kz/ru/rektorat/" target="_blank" rel="noopener noreferrer">https://almau.edu.kz/ru/rektorat/</a></div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="master" class="tab-section">
+      <h2>Магистратура</h2>
+
+      <p class="meta"><strong>Доступные школы:</strong></p>
+      <ul class="program-list">
+        <li>Школа менеджмента</li>
+        <li>Школа экономики и финансов</li>
+        <li>Школа предпринимательства и инноваций</li>
+        <li>Школа политики и права</li>
+        <li>Центр городских исследований</li>
+      </ul>
+
+      <p class="meta"><strong>Продолжительность обучения:</strong> 1 год или 2 года</p>
+      <p class="meta"><strong>Язык преподавания:</strong> Английский</p>
+
+      <h3 style="margin-top:12px;">Специальности по школам</h3>
+
+      <div class="meta"><strong>Школа менеджмента</strong></div>
+      <ul class="program-list">
+        <li>Менеджмент — 1 год</li>
+        <li>Менеджмент — 2 года</li>
+        <li>Управление цепочками поставок — 2 года</li>
+        <li>Управление проектами — 2 года</li>
+        <li>Маркетинг — 2 года</li>
+      </ul>
+
+      <div class="meta"><strong>Школа экономики и финансов</strong></div>
+      <ul class="program-list">
+        <li>Финансы — 1 год</li>
+        <li>Финансы — 2 года</li>
+      </ul>
+
+      <div class="meta"><strong>Школа политики и права</strong></div>
+      <ul class="program-list">
+        <li>Право (Предпринимательское право) — 1 год</li>
+        <li>Право (Предпринимательское право) — 2 года</li>
+      </ul>
+
+      <div class="meta"><strong>Школа предпринимательства и инноваций</strong></div>
+      <ul class="program-list">
+        <li>Управление продуктом — 1 год</li>
+        <li>Инновационное предпринимательство — 1 год</li>
+        <li>Управление в креативных индустриях — 1 год</li>
+      </ul>
+
+      <div class="meta"><strong>Центр городских исследований</strong></div>
+      <ul class="program-list">
+        <li>Градостроительство — 1 год</li>
+      </ul>
+
+      <p class="note">Ранее информация о бакалавриате была доступна в основном списке школ. Здесь добавлены только данные по магистратуре.</p>
+    </section>
+
+    <div class="message">ALMAU — ONE UNIVERSITY, ONE COMMUNITY.</div>
+  </div>
+
+  <footer>&copy; 2025 AlmaU</footer>
+
+  <script>
+    // табы: по клику показываем нужный раздел
+    document.querySelectorAll('.tab-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=> {
+        document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.getAttribute('data-target');
+        document.querySelectorAll('.tab-section').forEach(s=> s.style.display = 'none');
+        const el = document.getElementById(target);
+        if (el) el.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // ensure bachelor shown by default
+    window.addEventListener('DOMContentLoaded', ()=>{
+      document.querySelectorAll('.tab-section').forEach(s=> s.style.display = 'none');
+      const b = document.getElementById('bachelor');
+      if (b) b.style.display = 'block';
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      const btn = document.querySelector('.tab-btn[data-target="bachelor"]');
+      if (btn) btn.classList.add('active');
+    });
+  </script>
+</body>
+</html>
